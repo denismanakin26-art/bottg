@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build: .
+    container_name: habit-bot
+    restart: unless-stopped
+    volumes:
+      # База данных будет храниться в папке data рядом с docker-compose.yml
+      - ./data:/app/data
+    environment:
+      # Можно вынести токен в переменную окружения
+      - BOT_TOKEN=${BOT_TOKEN:-8842091636:AAFEhRb5HexnwI4mkSxQyC68Pv16Gqavj_0}
+    working_dir: /app
+    # Бот работает в интерактивном режиме, поэтому нужен tty
+    tty: true
+    stdin_open: true
