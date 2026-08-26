@@ -1,3 +1,19 @@
+import asyncio
+from aiohttp import web
+
+# Фейковый веб-сервер, чтобы Render не засыпал
+async def health(request):
+    return web.Response(text="Bot is alive!")
+
+app = web.Application()
+app.router.add_get('/', health)
+
+async def run_web():
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, '0.0.0.0', 10000)
+    await site.start()
+    print("Healthcheck server started on port 10000")
 import os
 import asyncio
 import random
